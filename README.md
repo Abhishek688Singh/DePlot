@@ -129,9 +129,6 @@ DePlot/
 - **Blockchain:** Private chain integration
 - **Security:** Hyperledger Fabric security
 
-## Project Demonstration
-Watch our project demonstration video here: [YouTube](https://youtu.be/pHNOJeRUE5U?si=BOO7bKruFSp5W5Tv)
-
 ---
 
 ## Acknowledgment
