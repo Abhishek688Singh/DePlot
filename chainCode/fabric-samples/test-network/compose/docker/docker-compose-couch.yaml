@@ -1,0 +1,32 @@
+version: '2.4'
+
+networks:
+  test:
+    name: fabric_test
+
+services:
+  couchdb0:
+    container_name: couchdb0
+    image: couchdb:3.3
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - "5984:5984"
+    networks:
+      - test
+    labels:
+      service: hyperledger-fabric
+
+  couchdb1:
+    container_name: couchdb1
+    image: couchdb:3.3
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - "7984:5984"
+    networks:
+      - test
+    labels:
+      service: hyperledger-fabric

@@ -1,0 +1,32 @@
+./network.sh up createChannel -c landchannel -ca
+
+./network.sh deployCC -ccn LandContract -ccp ../asset-transfer-basic/chaincode-javascript/ -ccl javascript -c land
+
+. scripts/envVar.sh 
+setGlobals 1
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=${PWD}/../config/
+
+
+
+export FABRIC_CA_CLIENT_HOME=${PWD}/organizations/peerOrganizations/org1.example.com/
+
+
+fabric-ca-client register   --id.name govRegistrar   --id.secret govpw   --id.type client   --id.attrs 'role=gov:ecert'   -u https://localhost:7054   --tls.certfiles ${PWD}/organizations/fabric-ca/org1/tls-cert.pem
+
+fabric-ca-client enroll   -u https://govRegistrar:govpw@localhost:7054   --caname ca-org1   -M ${PWD}/organizations/peerOrganizations/org1.example.com/users/govRegistrar@org1.example.com/msp   --tls.certfiles ${PWD}/organizations/fabric-ca/org1/tls-cert.pem
+
+ls organizations/peerOrganizations/org1.example.com/users/
+
+cp ${PWD}/organizations/peerOrganizations/org1.example.com/msp/config.yaml ${PWD}/organizations/peerOrganizations/org1.example.com/users/govRegistrar@org1.example.com/msp/config.yaml
+
+. scripts/envVar.sh
+setGlobals 1
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/govRegistrar@org1.example.com/msp
+
+//////////////////////////////////////////////////////////////
+chmod +x setup.sh
+./setup_land_network.sh
+
+/////////////////////////////////////////////////////// Invoke command
+peer chaincode invoke   -o localhost:7050   --ordererTLSHostnameOverride orderer.example.com   --tls   --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"   --peerAddresses localhost:7051   --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"   -C land   -n LandContract   -c '{"Args":["CreateLand","L001","T01","BuyerA@org2.example.com","Abhishek Singh","1000","Kanpur","S001","hash123"]}'
