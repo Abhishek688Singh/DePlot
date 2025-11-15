@@ -5,7 +5,7 @@
 # DePlot
 
 ## Project Overview
-This project implements a **Gasless Transaction Forwarder**, allowing users to send ERC-20 and ERC-721 transactions without holding ETH. The system consists of a forwarder smart contract, a backend relay service, and a frontend interface for users to interact with the system.
+LandChain is a blockchain-powered platform that solves the biggest challenges in land transactions—fraud, document manipulation, and lack of transparency.
 
 ---
 
